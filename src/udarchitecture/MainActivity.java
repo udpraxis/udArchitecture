@@ -23,6 +23,9 @@
  */
 package udarchitecture;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 /**
  *
  * @author Darwin Subramaniam
@@ -31,11 +34,33 @@ public class MainActivity {
     
     public static void main(String[] args) {
         
-        Server server = new Server(8000);
-        if(server.isConnected()){
-            System.out.println("Client is Connected");
-            
-        }
+        
+        /**
+         * This BlockingQueue will be the storage point 
+         * for all the data coming from the server and 
+         * to be taken by the appropriate Threads.
+         */
+        BlockingQueue speedQueue = new ArrayBlockingQueue(1024);
+        
+        BlockingQueue steeringQueue = new ArrayBlockingQueue(1024);
+        /*************************************************************/
+        
+        /**
+         * Creating new Instances of Lengkung and Beschleunigung
+         */
+        LengkungActor lengkung = new LengkungActor();
+        BeschleunigungActor beschleunigung = new BeschleunigungActor();
+        
+        /**
+         * Making the Lengkung and Beschleunigun as a Thread properties
+         */
+        Thread l = new Thread(lengkung);
+        Thread b = new Thread(beschleunigung);
+        
+        
+        
+        
+        
         
     }
 }

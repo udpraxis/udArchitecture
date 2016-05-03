@@ -67,6 +67,10 @@ public class BeschleunigungActor implements Runnable{
             gpio.provisionPwmOutputPin(forwardPin);
     final GpioPinPwmOutput backward = 
             gpio.provisionPwmOutputPin(backwardPin);
+    
+    public BeschleunigungActor(){
+        init();
+    }
    
     /**
      * initialise the Logic function.

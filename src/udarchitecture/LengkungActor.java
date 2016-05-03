@@ -68,10 +68,14 @@ public class LengkungActor implements Runnable{
     final GpioPinPwmOutput backward = 
             gpio.provisionPwmOutputPin(backwardPin);
    
+    public LengkungActor(){
+        init();
+    }
+    
     /**
      * initialise the Logic function.
      */
-    public void init(){
+    private void init(){
         this.inStatic = true;
         this.isMovingForward = false;   
     }
