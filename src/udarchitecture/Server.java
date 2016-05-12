@@ -43,6 +43,7 @@ import java.util.logging.Logger;
  */
 public class Server {
 
+    final static String DISCONNECT = "DISCONNECTED";
     //setting the ServerSocket as t
     private ServerSocket serverSocket;
     private Socket clientSocket;
@@ -60,10 +61,11 @@ public class Server {
     private BufferedReader in = null;
     private PrintWriter out = null;
     private String oldinput = "";
+    private int portNumber;
 
     Server(int portNumber) {
-
-        if (!isConnected()) {
+        this.portNumber = portNumber;
+        if (!isClientConnected()) {
             if (portNumberManager(portNumber)) {
 
                 try {
@@ -91,6 +93,9 @@ public class Server {
 
             }
         }
+    }
+    
+    private void init(){
     }
 
     /**
@@ -159,6 +164,10 @@ public class Server {
             try {
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));// in is a java.io.BufferReader Type
                 dataReadable = in.readLine();
+                if(dataReadable.equals("close")){
+                    clientSocket.close();
+                    return DISCONNECT;
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -195,14 +204,28 @@ public class Server {
      *
      * @return
      */
-    public boolean isConnected() {
+    public boolean isClientConnected() {
         if(initialised){
-            isConnected = clientSocket.isConnected();
+            isConnected = !clientSocket.isClosed();
         }else{
             isConnected = false;
         }
-        
         return isConnected;
+    }
+    
+    public void reActivate(){
+        init();
+        System.out.println("Working on reactivate");
+    }
+    
+    public boolean isShutDown(){
+        boolean isShutDown = false;
+        if(initialised){
+            isShutDown = clientSocket.isClosed() && serverSocket.isClosed();
+        }else{
+            isShutDown = false;
+        }
+        return isShutDown;
     }
 
     /**

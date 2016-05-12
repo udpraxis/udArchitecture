@@ -51,8 +51,8 @@ public class LengkungActor implements Runnable{
     int previousSpeed = 0;
     
     //Setting the pin naming.
-    Pin forwardPin = RaspiPin.GPIO_01;
-    Pin backwardPin = RaspiPin.GPIO_26;
+    Pin forwardPin = RaspiPin.GPIO_24;
+    Pin backwardPin = RaspiPin.GPIO_23;
     
     
     
